@@ -53,12 +53,11 @@ def cli(ihost, iport, dbhost, dbport, dbname, dbuser, dbpass, path, sleep):
     seinflux queries a SolarEdge inverter via Modbus over TCP and then enters data into an postgres database. Rinse and
     repeat.
     """
-    while True:  # run forever
-        conn = psycopg2.connect(
+    conn = psycopg2.connect(
             host=dbhost, port=dbport, dbname=dbname, user=dbuser, password=dbpass
         )
+    while True:  # run forever
         cur = conn.cursor()
-
         process = Popen(
             [path, "-m", "0", "--port", iport, ihost], stdout=PIPE, encoding="utf-8"
         )
